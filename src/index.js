@@ -14,13 +14,13 @@ const dir = {
 
 const patterns = {
 	codeTag: /(<code([\S\s]*?)>([\S\s]*?)<\/code>)/g,
-	import: /#imp\((.*?)\)/g, 
+	import: /#imp\((.*?)\)/g,
 	layout: /#layout\((.*?)\)/g,
 	attach: /#set\((.*?)\)/g,
-	section : /(#section)([\S\s]*?)(#\/section)/gi,
+	section : /(#section)([\S\s]*?)(#endsection)/gi,
 	simpleSection: /(#section\()(.*?),(.*?)(\))/g,
-	component: /(#component)([\S\s]*?)(@\/component)/g,
-	slot: /(#slot)([\S\s]*?)(#\/slot)/g,
+	component: /(@component)([\S\s]*?)(@endcomponent)/g,
+	slot: /(@slot)([\S\s]*?)(@endslot)/g,
 }
 
 
