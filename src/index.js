@@ -200,7 +200,7 @@ function renderLayout(content, text) {
 
 function renderComponent(content, rawComp) {
 	const compName = rawComp.split(")")[0].replace('#comp(', '')
-	let compContent = maskCodeTag(renderTag('component', compName))
+	let compContent = maskCodeTag(renderTag('comp', compName))
 	compContent = compContent.replace(patterns.attach, renderSlot.bind(this, rawComp))
 	
 	return compContent
