@@ -14,7 +14,7 @@ const dir = {
 
 const patterns = {
 	codeTag: /(<code([\S\s]*?)>([\S\s]*?)<\/code>)/g,
-	import: /#inc\(.*?)\)/g,
+	import: /#inc\((.*?)\)/g,
 	layout: /#layout\((.*?)\)/g,
 	attach: /#get\((.*?)\)/g,
 	section : /(#sec)([\S\s]*?)(#\/sec)/gi,
