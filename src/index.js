@@ -260,8 +260,6 @@ function getTagContent(tag){
 	return tag.split("(")[1].replace(")","")
 }
 
-
-
 function createFolderIfNone(dirName) {
 	if (!fs.existsSync(dirName))
 	    fs.mkdirSync(dirName);
