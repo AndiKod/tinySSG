@@ -17,7 +17,7 @@ const patterns = {
 	import: /#inc\((.*?)\)/g,
 	layout: /#layout\((.*?)\)/g,
 	attach: /#get\((.*?)\)/g,
-	section : /(#sec)([\S\s]*?)(#\/sec)/gi,
+	section : /(#sec)([\S\s]*?)(#endsec)/gi,
 	simpleSection: /(#sec\()(.*?),(.*?)(\))/g,
 	component: /(#comp)([\S\s]*?)(#\/comp)/g,
 	slot: /(#slot)([\S\s]*?)(#\/slot)/g,
@@ -179,7 +179,7 @@ function renderSimpleSection(content, text) {
 
 function renderLayout(content, text) {
 	const attachName = getTagContent(text) 
-	const patternBetweenSection = /(?<=\#sec)([\S\s]*?)(?=\#\/sec)/g
+	const patternBetweenSection = /(?<=#sec)([\S\s]*?)(?=#endsec)/g
 
 	const matchSection = content.match(patternBetweenSection).filter(
 						item => item.startsWith("(" + attachName) 
