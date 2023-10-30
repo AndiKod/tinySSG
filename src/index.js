@@ -14,13 +14,13 @@ const dir = {
 
 const patterns = {
 	codeTag: /(<code([\S\s]*?)>([\S\s]*?)<\/code>)/g,
-	import: /#inc\((.*?)\)/g,
+	import: /#inc\(.*?)\)/g,
 	layout: /#layout\((.*?)\)/g,
 	attach: /#get\((.*?)\)/g,
-	section : /(#sec)([\S\s]*?)(#endsec)/gi,
-	simpleSection: /(#sec\()(.*?),(.*?)(\))/g,
-	component: /(#comp)([\S\s]*?)(#\/comp)/g,
-	slot: /(#slot)([\S\s]*?)(#\/slot)/g,
+	section : /(@section)([\S\s]*?)(@endsection)/gi,
+	simpleSection: /(@section\()(.*?),(.*?)(\))/g,
+	component: /(@component)([\S\s]*?)(@endcomponent)/g,
+	slot: /(@slot)([\S\s]*?)(@endslot)/g,
 }
 
 
@@ -163,7 +163,7 @@ function renderTag(type, text) {
 function renderSimpleSection(content, text) {
 	const attachName = getTagContent(text.split(',')[0])
 	
-	const patternBetweenSection = /(?<=#sec\()(.*),(.*)(?=\))/g
+	const patternBetweenSection = /(?<=@section\()(.*),(.*)(?=\))/g
 	const matchSection = content.match(patternBetweenSection).filter(
 							item => item.startsWith(attachName) 
 						)[0]
@@ -179,7 +179,7 @@ function renderSimpleSection(content, text) {
 
 function renderLayout(content, text) {
 	const attachName = getTagContent(text) 
-	const patternBetweenSection = /(?<=#sec)([\S\s]*?)(?=#endsec)/g
+	const patternBetweenSection = /(?<=@section)([\S\s]*?)(?=@endsection)/g
 
 	const matchSection = content.match(patternBetweenSection).filter(
 						item => item.startsWith("(" + attachName) 
@@ -256,9 +256,10 @@ function getCompleteFileName(text, type) {
 	}
 }
 
+
 function getTagContent(tag){
 	return tag.split("(")[1].replace(")","")
-}
+} 
 
 function createFolderIfNone(dirName) {
 	if (!fs.existsSync(dirName))
