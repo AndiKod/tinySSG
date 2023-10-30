@@ -3,6 +3,7 @@
 const fs = require('fs-extra')
 const path = require('path');
 
+// Something
 const dir = {
 	static: "./dev/static",
 	pages : "./dev/pages",
