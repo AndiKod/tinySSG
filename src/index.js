@@ -14,11 +14,11 @@ const dir = {
 
 const patterns = {
 	codeTag: /(<code([\S\s]*?)>([\S\s]*?)<\/code>)/g,
-	import: /@import\((.*?)\)/g,
-	layout: /@layout\((.*?)\)/g,
-	attach: /@attach\((.*?)\)/g,
+	import: /@import\{(.*?)\}/g,
+	layout: /@layout\{(.*?)\}/g,
+	attach: /@attach\{(.*?)\}/g,
 	section : /(@section)([\S\s]*?)(@endsection)/gi,
-	simpleSection: /(@section\()(.*?),(.*?)(\))/g,
+	simpleSection: /(@section\{)(.*?),(.*?)(\})/g,
 	component: /(@component)([\S\s]*?)(@endcomponent)/g,
 	slot: /(@slot)([\S\s]*?)(@endslot)/g,
 }
@@ -257,8 +257,12 @@ function getCompleteFileName(text, type) {
 }
 
 function getTagContent(tag){
-	return tag.split("(")[1].replace(")","")
+	return tag.split("{")[1].replace("}","")
 }
+
+/*function getTagContent(tag){
+	return tag.split("(")[1].replace(")","")
+} */
 
 function createFolderIfNone(dirName) {
 	if (!fs.existsSync(dirName))
