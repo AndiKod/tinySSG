@@ -163,7 +163,7 @@ function renderTag(type, text) {
 function renderSimpleSection(content, text) {
 	const attachName = getTagContent(text.split(',')[0])
 	
-	const patternBetweenSection = /(?<=@section\()(.*),(.*)(?=\))/g
+	const patternBetweenSection = /(?<=#sec\()(.*),(.*)(?=\))/g
 	const matchSection = content.match(patternBetweenSection).filter(
 							item => item.startsWith(attachName) 
 						)[0]
