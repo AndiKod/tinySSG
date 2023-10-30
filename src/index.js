@@ -179,7 +179,7 @@ function renderSimpleSection(content, text) {
 
 function renderLayout(content, text) {
 	const attachName = getTagContent(text) 
-	const patternBetweenSection = /(?<=@section)([\S\s]*?)(?=@endsection)/g
+	const patternBetweenSection = /(?<=#sec)([\S\s]*?)(?=#\/sec)/g
 
 	const matchSection = content.match(patternBetweenSection).filter(
 						item => item.startsWith("(" + attachName) 
