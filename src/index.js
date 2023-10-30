@@ -14,7 +14,7 @@ const dir = {
 
 const patterns = {
 	codeTag: /(<code([\S\s]*?)>([\S\s]*?)<\/code>)/g,
-	import: /#inc\((.*?)\)/g,
+	import: /#inc\(.*?)\)/g,
 	layout: /#layout\((.*?)\)/g,
 	attach: /#get\((.*?)\)/g,
 	section : /(#sec)([\S\s]*?)(#\/sec)/gi,
@@ -163,7 +163,7 @@ function renderTag(type, text) {
 function renderSimpleSection(content, text) {
 	const attachName = getTagContent(text.split(',')[0])
 	
-	const patternBetweenSection = /(?<=#sec\()(.*),(.*)(?=\))/g
+	const patternBetweenSection = /(?<=@section\()(.*),(.*)(?=\))/g
 	const matchSection = content.match(patternBetweenSection).filter(
 							item => item.startsWith(attachName) 
 						)[0]
@@ -179,7 +179,7 @@ function renderSimpleSection(content, text) {
 
 function renderLayout(content, text) {
 	const attachName = getTagContent(text) 
-	const patternBetweenSection = /(?<=#sec)([\S\s]*?)(?=#\/sec)/g
+	const patternBetweenSection = /(?<=@section)([\S\s]*?)(?=@endsection)/g
 
 	const matchSection = content.match(patternBetweenSection).filter(
 						item => item.startsWith("(" + attachName) 
@@ -199,8 +199,8 @@ function renderLayout(content, text) {
 }
 
 function renderComponent(content, rawComp) {
-	const compName = rawComp.split(")")[0].replace('#comp(', '')
-	let compContent = maskCodeTag(renderTag('comp', compName))
+	const compName = rawComp.split(")")[0].replace('@component(', '')
+	let compContent = maskCodeTag(renderTag('component', compName))
 	compContent = compContent.replace(patterns.attach, renderSlot.bind(this, rawComp))
 	
 	return compContent
@@ -209,14 +209,14 @@ function renderComponent(content, rawComp) {
 function renderSlot(rawComp, rawAttach) {
 	const attachName = getTagContent(rawAttach) 
 
-	const patternBetweenSlot = /(?<=#slot)([\S\s]*?)(?=#\/slot)/g
+	const patternBetweenSlot = /(?<=@slot)([\S\s]*?)(?=@endslot)/g
 	const slots = rawComp.match(patternBetweenSlot)
 
 	let matchSlot = ''
 	
 	if(slots == null) { //If No slots mean simple component
 		matchSlot = rawComp.split(')').slice(1).toString()
-							.replace('#\/comp', '')
+							.replace('@endcomponent', '')
 	} else {
 		matchSlot = slots.filter(
 							item => item.startsWith("(" + attachName) 
