@@ -1,4 +1,4 @@
-#tinySSG
+# tinySSG
 
 A port from hilmanski/mini-SSG since the project is no longer updated but interesting. Dependencies are updated as needed, and so far got just minor tweaks. More customisation is likely to come later.
 
